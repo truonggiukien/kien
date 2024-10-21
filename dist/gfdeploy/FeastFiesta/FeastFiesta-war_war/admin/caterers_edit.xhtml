@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="email" content="" />
+        <meta name="author" content="" />
+        <title>Admin Management</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="../resources/css/css_admin/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    </h:head>
+    <h:body class="sb-nav-fixed">
+        <div id="layoutSidenav">
+            <ui:include src="_adminheader.xhtml" />
+            <div id="layoutSidenav">
+                <ui:include src="_sidenav.xhtml" />
+                <div id="layoutSidenav_content">
+                    <main>
+                        <div class="container-fluid px-4">
+                            <h1 class="mt-4">Edit Caterers</h1>
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h:form>
+                                        <h:commandButton action="#{caterersMB.resetForm()}"  value="Return" styleClass="btn btn-secondary" />
+                                    </h:form>
+                                </div>
+                                <div class="card-body">
+                                    <h:form id="formEditCaterers" class="needs-validation" enctype="multipart/form-data">
+                                        <div>
+                                            <h:outputLabel for="caterersID" value="Caterers ID" />
+                                            <h:inputText id="caterersID" styleClass="form-control" value="#{caterersMB.caterer.catererId}" required="true" requiredMessage="Caterers ID is empty" />
+                                            <h:message for="caterersID" class="invalid-mess" />
+                                        </div>
+                                        <div>
+                                            <h:outputLabel for="name" value="Name" />
+                                            <h:inputText id="name" styleClass="form-control" value="#{caterersMB.caterer.name}" required="true" requiredMessage="Name is empty" />
+                                            <h:message for="name" class="invalid-mess" />
+                                        </div>
+                                        <div>
+                                            <h:outputLabel for="address" value="Address" />
+                                            <h:inputText id="address" styleClass="form-control" value="#{caterersMB.caterer.address}" required="true" requiredMessage="Address is empty" />
+                                            <h:message for="address" class="invalid-mess" />
+                                        </div>
+                                        <div>
+                                            <h:outputLabel for="phone" value="Phone" />
+                                            <h:inputText id="phone" styleClass="form-control" value="#{caterersMB.caterer.phone}" required="true" requiredMessage="Phone is empty" />
+                                            <h:message for="phone" class="invalid-mess" />
+                                        </div>
+                                        <div>
+                                            <h:outputLabel for="ddate" value="Day Join" />
+                                            <input type="date" id="ddate" class="form-control" jsf:value="#{caterersMB.dateJoin}"  />
+                                            <h:message for="ddate" class="invalid-mess" />
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                            <h:commandButton action="#{caterersMB.editCaterers()}" onclick="return confirm('Are you sure?');" value="Update Order" styleClass="btn btn-primary" type="submit" />
+                                        </div>
+                                    </h:form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </main>               
+                </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+            <script src="../resources/js/js_admin/scripts.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+            <script src="../resources/js/js_admin/datatables-simple-demo.js"></script>
+        </div>
+    </h:body>
+</html>

@@ -1,0 +1,9 @@
+
+<project xmlns:ear="http://www.netbeans.org/ns/j2ee-earproject/2" name="FeastFiesta" default="default" basedir=".">
+    <description>Builds, tests, and runs the project FeastFiesta.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+   
+</project>
+
+

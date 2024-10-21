@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Admin Management</title>
+    </h:head>
+    <h:body class="sb-nav-fixed">
+        <ui:include src="_adminheader.xhtml" />
+        <div id="layoutSidenav">
+            <ui:include src="_sidenav.xhtml" />
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Add Ingredient to Dish</h1>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                            </div>
+                            <div class="card-body">
+                                <h:form id="formAddMenu" class="needs-validation" enctype="multipart/form-data">
+                                    <h:inputHidden id="menudishID" value="#{dishIngChildMB.dishing.dishIngID}"/>   
+                                    <div>
+                                        <h:outputText value="Dish"/>
+                                        <h:selectOneMenu class="form-control" id="dishID" value="${dishIngChildMB.dishID}">
+                                            <f:selectItems value="#{dishIngChildMB.showAllDishes()}" var="itemPID1"
+                                                           itemValue="#{itemPID1.dishID}" itemLabel="#{itemPID1.dishID} -#{itemPID1.itemName}"/>
+                                        </h:selectOneMenu>
+                                        <h:message for="dishID"/>
+                                    </div>
+                                    <div>
+                                        <h:outputText value="Ingredient"/>
+                                        <h:selectOneMenu class="form-control" id="ingredientID" value="${dishIngChildMB.ingredientID}">
+                                            <f:selectItems value="#{dishIngChildMB.showAllIngredient()}" var="itemPID"
+                                                           itemValue="#{itemPID.ingredientID}" itemLabel="#{itemPID.ingredientID} -#{itemPID.name}"/>
+                                        </h:selectOneMenu>
+                                        <h:message for="menuID"/>
+                                    </div>
+                                    <div>
+                                        <h:outputLabel for="quantity" value="Quantity" />
+                                        <h:inputText id="quantity" styleClass="form-control" value="#{dishIngChildMB.dishing.quantity}" required="true" requiredMessage="Quantity is empty" />
+                                        <h:message for="quantity" class="invalid-mess" />
+                                    </div>  
+                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                        <h:commandButton action="#{dishIngChildMB.createDishIng()}" value="Add" styleClass="btn btn-primary" type="submit" />
+                                        <a href="dishes_view.xhtml" class="btn btn-secondary">Return</a>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="../resources/js/js_admin/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="../resources/js/js_admin/datatables-simple-demo.js"></script>
+    </h:body>
+</html>

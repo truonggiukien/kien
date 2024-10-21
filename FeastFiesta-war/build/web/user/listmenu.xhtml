@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <title>HOME</title>
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml" />
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Menu</h1>
+        </div>
+        <!-- Single Page Header End -->
+
+
+        <!-- Fruits Shop Start-->
+        <div class="container-fluid fruite py-5">
+            <div class="container py-5">
+                <div class="row g-4">
+                    <div class="col-lg-12">
+                        <div class="row g-4">
+                            <div class="col-xl-3">
+                                <h:form>
+                                    <div class="input-group w-100 mx-auto d-flex">
+                                        <input type="search" id="searchInput" class="form-control p-3" placeholder="keywords" jsf:value="#{menuListMB.searchTerm}" aria-describedby="search-icon-1"/>
+
+                                        <button  class="input-group-text p-3">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+
+                                    </div>
+                                </h:form>
+                            </div>
+                            <div class="col-6"></div>
+
+                        </div>
+                        <div class="container-fluid service py-5">
+                            <div class="container py-5">
+                                <div class="row g-4 justify-content-center">
+                                    <c:choose>
+                                        <c:when test="#{empty menuListMB.showAllMenu()}">
+                                            <div class="text-danger">No menu found.</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:forEach items="#{menuListMB.showAllMenu()}" var="iProduct">
+
+
+                                                <div class="col-md-6 col-lg-6">
+                                                    <a href="#">
+                                                        <div class="service-item border border-secondary rounded position-relative fruite-item">
+
+                                                            <h:graphicImage class="img-fluid rounded-top w-100" value="../resources/images/menu/#{iProduct.picture}" alt="#{iProduct.picture}"/>  
+
+
+                                                            <div class="px-6 rounded-bottom">
+                                                                <div class="service-content bg-secondary text-center p-6 rounded">
+                                                                    <h3 class="text-white">${iProduct.menuName}</h3>
+                                                                    <p>${iProduct.description}</p>
+                                                                    <h:form>
+                                                                        <p class="mb-0"> <!-- Ensures the "Add to cart" button aligns properly -->
+                                                                            <h:commandLink class="btn border border-secondary rounded-pill px-3 text-primary" action="#{cartProcessSBMB.addCartMenu(iProduct)}" value="Add to cart">
+                                                                            </h:commandLink>
+                                                                        </p>
+                                                                    </h:form>
+                                                                </div>
+                                                                <div class="service-content p-8 rounded">
+                                                                    <ul>
+                                                                        <ui:repeat value="#{menuListMB.showDishMenu(iProduct)}" var="dish">
+                                                                            <li>#{dish.dishID.categoryID.name} - #{dish.dishID.itemName} (#{dish.quantity})</li>
+                                                                        </ui:repeat>
+                                                                    </ul>
+                                                                  
+                                                                </div>                                                                          
+                                                            </div>
+
+
+                                                        </div>
+                                                    </a>
+                                                </div>            
+
+                                            </c:forEach>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fruits Shop End-->
+
+
+        <ui:include src="footer.xhtml" />
+
+    </h:body>
+</html>

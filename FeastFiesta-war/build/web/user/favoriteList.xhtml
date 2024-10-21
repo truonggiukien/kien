@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>Favorite List</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../resources/css/css_client/login.css" rel="stylesheet" />  
+        <style>
+            .favorite-item {
+                background-color: rgba(255, 255, 255, 0.1);
+                padding: 10px;
+                margin: 5px 0;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between; /* Adjust alignment */
+            }
+            .favorite-item img {
+                margin-right: 10px;
+                border-radius: 5px;
+                width: 80px;
+                height: 80px;
+            }
+        </style>
+    </head>
+    <body>
+        <ui:include src="header.xhtml" />
+
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">My Favorite</h1>
+        </div>
+        <div class="container-fluid contact py-5">
+            <div class="container py-5">
+                <div class="p-5 bg-light rounded">
+                    <div class="row g-5 justify-content-center">    
+                        <div class="col-lg-8">     
+                            <h:form id="favoriteListForm">
+                                <ul>
+                                    <ui:repeat value="#{favoriteListMB.find()}" var="favorite">
+                                        <li class="favorite-item">
+                                            <img src="../resources/images/products/#{favorite.dishID.picture}" alt="#{favorite.dishID.itemName}" />
+                                            <div>
+                                                <h:outputText value="Dish: #{favorite.dishID.itemName}" />
+                                                <br />
+                                                <h:outputText value="Customer: #{favorite.customerID.name}" />
+                                            </div>
+                                            <!-- Remove Button -->
+                                            <h:commandButton value="Remove" action="#{favoriteListMB.removeFavorite(favorite)}" styleClass="btn btn-sm btn-danger">
+                                                <f:ajax execute="@form" render="@form" />     
+                                            </h:commandButton>
+                                            <!-- Add to Cart Button -->
+                                            <h:commandButton value="Add to Cart" action="#{cartProcessSBMB.addCart(favorite.dishID.dishID)}" styleClass="btn btn-sm btn-primary">
+                                                <f:ajax execute="@form" render="@form" />     
+                                            </h:commandButton>
+
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </h:form>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ui:include src="footer.xhtml"/>
+    </body>
+</html>

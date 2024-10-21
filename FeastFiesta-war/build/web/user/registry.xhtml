@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Register</title>
+        <link href="../resources/css/css_client/registry.css" rel="stylesheet" />
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml" />
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Registry</h1>
+        </div>
+        <!-- Single Page Header End -->
+
+        <div class="container-fluid contact py-5">
+            <div class="container py-5">
+                <div class="p-5 bg-light rounded">
+                    <div class="row g-5 justify-content-center">    
+                        <div class="col-lg-9">     
+                            <h:form id="formregistry">
+                                <div class="form-group">
+                                    <h:outputLabel for="name" value="Name: " />
+                                    <h:inputText id="name" value="#{customersMB.customer.name}" 
+                                                 class="w-100 w-100 form-control border-0 py-3  border-0 py-3 " 
+                                                 required="true" requiredMessage="Name is required" />
+                                    <h:message for="name" class="text-danger" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="username" value="Username: " />
+                                    <h:inputText id="username" value="#{customersMB.customer.username}" 
+                                                 class="w-100 form-control border-0 py-3 " 
+                                                 required="true" requiredMessage="Username is required" />
+                                    <h:message for="username" class="text-danger" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="password" value="Password: " />
+                                    <h:inputSecret id="password" value="#{customersMB.customer.password}" 
+                                                   class="w-100 form-control border-0 py-3 " required="true" requiredMessage="Password is required" />
+                                    <h:message for="password" class="text-danger" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="confirmpassword" value="Confirm Password: " />
+                                    <h:inputSecret id="confirmpassword" value="#{customersMB.confirmpassword}" 
+                                                   class="w-100 form-control border-0 py-3 " required="true" requiredMessage="Please confirm your password" />
+                                    <h:message for="confirmpassword" class="text-danger" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="email" value="Email: " />
+                                    <h:inputText id="email" value="#{customersMB.customer.email}" 
+                                                 class="w-100 form-control border-0 py-3 " required="true" requiredMessage="Email is required" />
+                                    <h:message for="email" class="text-danger" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="phone" value="Phone: " />
+                                    <h:inputText id="phone" value="#{customersMB.customer.phone}" 
+                                                 class="w-100 form-control border-0 py-3 " />
+                                    <h:message for="phone" class="text-danger" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="address" value="Address: " />
+                                    <h:inputText id="address" value="#{customersMB.customer.address}" 
+                                                 class="w-100 form-control border-0 py-3 " />
+                                    <h:message for="address" class="text-danger" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="" value="" />
+                                </div>
+                                <div class="button-container">
+                                    <h:commandButton value="Register" action="#{customersMB.registryCustomers()}" 
+                                                     class="w-100 btn form-control border-secondary py-3 bg-white text-primary " />
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ui:include src="footer.xhtml" />
+    </h:body>
+</html>

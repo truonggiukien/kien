@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Events</title>
+        <link href="../resources/css/css_client/voucher.css" rel="stylesheet" />
+        <script>
+            function copyToClipboard(eventName) {
+                var tempInput = document.createElement("input");
+                tempInput.value = eventName; 
+                document.body.appendChild(tempInput);
+                tempInput.select(); 
+                document.execCommand("copy"); 
+                document.body.removeChild(tempInput); 
+                alert("Copied: " + eventName); 
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml" />
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Events</h1>
+        </div>
+        <!-- Single Page Header End -->
+        <!-- Events Start -->
+        <div class="container-fluid contact py-5">
+            <div class="container py-5">
+                <div class="p-5 bg-light rounded">
+                    <div class="row g-5 justify-content-center">    
+                        <div class="col-lg-8">     
+                            <h:form id="events">
+                                <div class="form-group">
+                                    <!-- Using ui:repeat to loop through the list of events from the managed bean -->
+                                    <ui:repeat value="#{eventsMB.showAllEvents()}" var="event">
+                                        <div class="event-container">
+                                            <div class="event-header">
+                                                <!-- Display event name -->
+                                                <h:outputText id="eventName#{event.eventID}" value="#{event.eventName}" styleClass="event-title" />
+
+                                                <!-- Button to copy event name -->
+                                                <button type="button" class="btn btn-secondary" onclick="copyToClipboard('#{event.eventName}')">
+                                                    Copy voucher
+                                                </button>
+
+                                                <!-- Display start date -->
+                                                <h:outputText id="beginDate#{event.eventID}" value="#{eventsMB.formatDay(event.beginDate)}" styleClass="event-date" />
+
+                                                <!-- Display end date -->
+                                                <h:outputText id="endDate#{event.eventID}" value="#{eventsMB.formatDay(event.endDate)}" styleClass="event-date" />
+                                            </div>
+
+                                            <div class="event-details">
+                                                <!-- Display quantity and discount -->
+                                                <p>Quantity: <h:outputText value="#{event.quantity}" /></p>
+                                                <p>Discount: <h:outputText value="#{event.discount}%" /></p>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                </div> <!-- Close this div for form-group -->
+                            </h:form>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Events End -->
+        <ui:include src="footer.xhtml" />
+    </h:body>
+</html>

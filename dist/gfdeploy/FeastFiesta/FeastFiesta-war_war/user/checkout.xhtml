@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <title>Cart</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml" />
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Checkout</h1>
+        </div>
+        <!-- Single Page Header End -->
+
+        <!-- Checkout Page Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5">
+                <h1 class="mb-4">Billing details</h1>
+                <div class="row g-5">
+                    <div class="col-md-12 col-lg-6 col-xl-7">
+                        <h:form id="formAddOrder" class="needs-validation" enctype="multipart/form-data">
+                            <h:inputHidden id="orderNo" value="#{cartProcessSBMB.order.orderNo}"/>
+                            <div>
+                                <h:outputLabel class="form-label my-3" for="deliveryDate" value="Delivery Date" />
+                                <input type="date" id="ddate" class="form-control" jsf:value="#{cartProcessSBMB.deliveryDate}" required="true"/>
+                                <h:message for="ddate" class="invalid-mess" />
+                            </div>
+                            <div>
+                                <h:outputLabel class="form-label my-3" for="deliveryAddress" value="Delivery Address" />
+                                <h:inputText id="deliveryAddress" styleClass="form-control" value="#{cartProcessSBMB.order.deliveryAddress}" required="true" requiredMessage="Address is empty"/>
+                                <h:message for="deliveryAddress" class="invalid-mess" />
+                            </div>
+
+                            <div>
+                                <h:outputLabel class="form-label my-3" for="notes" value="Notes (optional)" />
+                                <h:inputTextarea id="notes" class="w-100 border-1 rounded mb-4" rows="5" cols="10" value="#{cartProcessSBMB.order.notes}"/>
+                                <h:message for="notes" class="invalid-mess"/>
+                            </div>   
+                            <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                                <h:commandButton class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" onclick="return confirm('Create order?');" action="#{cartProcessSBMB.addOrder()}" value="Place Order" type="submit" />
+                            </div>
+                        </h:form>
+
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-5">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Products</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="#{cartProcessSBMB.showAllCart().entrySet()}" var="iCart">
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="d-flex align-items-center mt-2">
+                                                    <img src="../resources/images/products/#{iCart.key.picture}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt=""/>
+                                                </div>
+                                            </th>
+                                            <td class="py-5">#{iCart.key.itemName}</td>
+                                            <td class="py-5">$#{iCart.key.price}</td>
+                                            <td class="py-5">#{iCart.value}</td>
+                                            <td class="py-5">$#{iCart.value * iCart.key.price}</td>
+                                        </tr>
+                                    </c:forEach>
+
+                                    <tr>
+                                        <th scope="row">
+                                        </th>
+                                        <td class="py-5">
+                                            <p class="mb-0 text-dark text-uppercase py-3">DISCOUNT</p>
+                                        </td>
+                                        <td class="py-5"></td>
+                                        <td class="py-5"></td>
+                                        <td class="py-5">
+
+                                            <c:choose>
+                                                <c:when test="#{(empty  session.getAttribute('discount'))}">
+                                                    <div class="py-3 border-bottom border-top">
+                                                        <p class="mb-0">None</p>
+                                                    </div>
+                                                </c:when>
+
+                                                <c:otherwise>
+                                                    <div class="py-3 border-bottom border-top">
+                                                        <p class="mb-0">- #{cartProcessSBMB.getFormattedDiscount()}</p>
+                                                    </div>
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                        </th>
+                                        <td class="py-5">
+                                            <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
+                                        </td>
+                                        <td class="py-5"></td>
+                                        <td class="py-5"></td>
+                                        <td class="py-5">
+                                            <div class="py-3 border-bottom border-top">
+
+                                                <p class="mb-0 text-dark">
+                                                    <h:outputText value="#{cartProcessSBMB.getTotalPriceS()}">
+                                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                                    </h:outputText>
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Checkout Page End -->
+
+
+
+        <ui:include src="footer.xhtml" />
+
+    </h:body>
+</html>
