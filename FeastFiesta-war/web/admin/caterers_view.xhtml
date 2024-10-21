@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Admin - Caterers</title>
+    </h:head>
+    <h:body class="sb-nav-fixed">
+        <ui:include src="_adminheader.xhtml" />
+        <div id="layoutSidenav">
+            <ui:include src="_sidenav.xhtml" />
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4"> Caterers </h1>
+                        <div class="mb-4">
+                            <h:form>
+                                <h:commandButton class="btn btn-dark" action="caterers_add" type="submit" value="Add Caterers"/>
+                            </h:form>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                            </div>
+                            <div class="card-body">
+                                <form id="tableCaterers" action="#" method="post">
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th>Caterers Id</th>
+                                                <th>Name</th>
+                                                <th>Address</th>
+                                                <th>Phone</th>
+                                                <th>Day of join</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ui:repeat value="#{caterersMB.showAllCaterers()}" var="item1">
+                                                <tr>
+                                                    <td>#{item1.catererId}</td>
+                                                    <td>#{item1.name}</td>
+                                                    <td>#{item1.address}</td>
+                                                    <td>#{item1.phone}</td>
+                                                    <td>
+                                                        <h:outputText value="#{item1.dateOfJoin}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Asia/Ho_Chi_Minh" />
+                                                        </h:outputText>
+                                                    </td>
+                                                    <td>
+                                                        <h:form>
+                                                            <h:commandButton action="#{caterersMB.findCatererforUpdate(item1)}"  image="../resources/images/icons/edit_1.png" type="submit"/>
+                                                        </h:form>
+                                                    </td>
+                                                    <td>
+                                                        <h:form>
+                                                            <h:commandButton action="#{caterersMB.deleteCaterers(item1)}" onclick="return confirm('Are you sure?');" image="../resources/images/icons/delete.png"  type="submit"/>
+                                                        </h:form>
+                                                    </td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="../resources/js/js_admin/datatables-simple-demo-product.js"></script>
+    </h:body>
+</html>
+

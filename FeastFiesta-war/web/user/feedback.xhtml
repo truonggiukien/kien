@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Feedback</title>
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml" />
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Contact</h1>
+        </div>
+        <!-- Single Page Header End -->
+
+
+        <!-- Contact Start -->
+        <div class="container-fluid contact py-5">
+            <div class="container py-5">
+                <div class="p-5 bg-light rounded">
+                    <div class="row g-4">   
+                        <div class="col-lg-12">
+                            <div class="h-100 rounded">
+                                <iframe class="rounded w-100" style="height: 400px;" 
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423099.0879674268!2d105.53825058060733!3d9.860561114779731!2m3!1f0!2f0!3f0!3m2!1i1200!2i800!4f13.1!3m3!1m2!1s0x31a0881f9a732075%3A0xfa43fbeb2b00ca73!2sCUSC%20-%20Cantho%20University%20Software%20Center!5e0!3m2!1sen!2s!4v1723655445158!5m2!1sen!2s" 
+                                        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <h4 class="text-center text-bg-secondary display-6">Feedback</h4>
+                            <c:choose>
+                                <c:when test="#{(empty session.getAttribute('username'))}">
+          
+                                    <div class="form-floating mb-3 text-center">Login to send feedback</div>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <h:form id="ffeedback">
+                                        <div class="form-floating mb-3">
+                                            <h:inputText id="username" class="w-100 form-control border-0 mb-4" value="#{session.getAttribute('username')}" readonly="true"/>
+                                            <label for="username">Username</label>
+                                            <h:message for="username" class="invalid-mess"/>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <h:inputTextarea id="message" class="w-100 border-0 mb-4" rows="5" cols="10" required="true" value="#{feedbacksMB.feedback.message}" requiredMessage="Message is empty"/>
+                                            <h:message for="message" class="invalid-mess"/>
+                                        </div>
+                                        <div>  
+                                            <h:commandButton id="submit" class="w-100 btn form-control border-secondary py-3 bg-white text-primary " value="Send Feedback" onclick="displayMessage()" action="#{feedbacksMB.addFeedback()}"/>
+                                        </div>
+                                    </h:form>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="d-flex p-4 rounded mb-4 bg-white">
+                                <i class="fas fa-map-marker-alt fa-2x text-primary me-4"></i>
+                                <div>
+                                    <h4>Address</h4>
+                                    <p class="mb-2">1 Ly Tu Trong Street, An Phu Ward, Ninh Kieu District, Can Tho</p>
+                                </div>
+                            </div>
+                            <div class="d-flex p-4 rounded mb-4 bg-white">
+                                <i class="fas fa-envelope fa-2x text-primary me-4"></i>
+                                <div>
+                                    <h4>Mail Us</h4>
+                                    <p class="mb-2">team4@cusc.ctu.edu.vn</p>
+                                </div>
+                            </div>
+                            <div class="d-flex p-4 rounded bg-white">
+                                <i class="fa fa-phone-alt fa-2x text-primary me-4"></i>
+                                <div>
+                                    <h4>Telephone</h4>
+                                    <p class="mb-2">(+012) 3456 7890</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact End -->
+
+
+        <ui:include src="footer.xhtml" />
+
+    </h:body>
+</html>

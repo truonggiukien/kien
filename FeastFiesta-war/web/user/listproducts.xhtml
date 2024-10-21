@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <title>HOME</title>
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml" />
+        <!-- Single Page Header start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Our Dishes</h1>
+        </div>
+        <!-- Single Page Header End -->
+
+
+        <!-- Fruits Shop Start-->
+        <div class="container-fluid fruite py-5">
+            <div class="container py-5">
+                <div class="row g-4">
+                    <div class="col-lg-12">
+                        <div class="row g-4">
+                            <div class="col-xl-3">
+                                <h:form>
+                                    <div class="input-group w-100 mx-auto d-flex">
+                                        <input type="search" id="searchInput" class="form-control p-3" placeholder="keywords" jsf:value="#{dishListMB.searchTerm}" aria-describedby="search-icon-1"/>
+
+                                        <button  class="input-group-text p-3">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+
+                                    </div>
+                                </h:form>
+                            </div>
+                            <div class="col-6"></div>
+
+                        </div>
+                        <div class="row g-4">
+                            <div class="col-lg-3">
+                                <div class="row g-4">
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <h4>Categories</h4>
+                                            <ul class="list-unstyled fruite-categorie">
+                                                <c:forEach items="#{dishListMB.showAllCategories()}" var="iCat">
+                                                    <li>
+                                                        <div class="d-flex justify-content-between fruite-name">
+                                                            <h:form>
+                                                                <h:commandLink action="#{dishListMB.showDishesByCategory(iCat.name)}" value="${iCat.name}">
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                            <h:form>
+                                                <h:commandButton class="btn border border-secondary rounded-pill px-3 text-primary ml-2"
+                                                                 action="#{dishListMB.clearCategory()}" value="Clear" />       
+                                            </h:form>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9">
+                                <div class="row g-4 justify-content-start"> 
+                                    <c:choose>
+                                        <c:when test="#{empty dishListMB.showDishes()}">
+                                            <div class="text-danger">No dishes found.</div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:forEach items="#{dishListMB.showDishes()}" var="iProduct">
+                                                <div class="col-md-6 col-lg-6 col-xl-4">
+                                                    <div class="rounded position-relative fruite-item">
+                                                        <h:form>
+                                                            <h:commandLink class="text-decoration-none text-reset" action="#{dishListMB.findDishforShow(iProduct.dishID)}" value="">
+                                                                <h:graphicImage class="img-fluid w-100 rounded-top object-fit-lg-contain" value="../resources/images/products/#{iProduct.picture}" style="width: 200px; height:  200px" alt="#{iProduct.picture}"/>  
+                                                            </h:commandLink> 
+                                                        </h:form>
+                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${iProduct.categoryID.name}</div>
+                                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                            <h4>${iProduct.itemName}</h4>
+
+                                                            <div class="d-flex justify-content-between flex-lg-wrap">
+                                                                <p class="text-dark fs-5 fw-bold mb-0">
+                                                                    <h:outputText value="${iProduct.price}">
+                                                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                                                    </h:outputText>
+                                                                </p>
+                                                                <div class="d-flex align-items-center">
+                                                                    <h:form>
+                                                                        <p class="mb-0"> <!-- Ensures the "Add to cart" button aligns properly -->
+                                                                            <h:commandLink class="btn border border-secondary rounded-pill px-3 text-primary" action="#{cartProcessSBMB.addCart(iProduct.dishID)}" value="Add cart">
+                                                                            </h:commandLink>
+                                                                        </p>
+                                                                    </h:form>
+                                                                    &nbsp;
+
+                                                                    <c:choose>
+                                                                        <c:when test="#{(empty  session.getAttribute('username'))}">
+                                                                            <h:form>
+                                                                                <h:commandButton class="btn border border-secondary rounded-pill px-3 text-primary ml-2"
+                                                                                                 action="login.xhtml"
+                                                                                                 value="Favorite">
+                                                                                </h:commandButton>
+                                                                            </h:form>
+                                                                        </c:when>
+
+                                                                        <c:otherwise>
+                                                                            <h:form>
+                                                                                <h:commandButton class="btn border border-secondary rounded-pill px-3 text-primary ml-2"
+                                                                                                 action="#{favoriteListMB.addToFavorite(iProduct.dishID)}"
+                                                                                                 value="Favorite"
+                                                                                                 onclick="return confirm('Are you sure you want to add this dish to your favorites?')">
+                                                                                </h:commandButton>
+                                                                            </h:form>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fruits Shop End-->
+
+
+        <ui:include src="footer.xhtml" />
+
+    </h:body>
+</html>

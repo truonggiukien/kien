@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/xhtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <title>Feast Fiesta</title>
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"/>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;family=Raleway:wght@600;800&amp;display=swap" rel="stylesheet"/>
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"/>
+
+        <!-- Libraries Stylesheet -->
+        <link href="../resources/template/lib/lightbox/css/lightbox.min.css" rel="stylesheet"/>
+        <link href="../resources/template/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"/>
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="../resources/template/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Template Stylesheet -->
+        <link href="../resources/template/css/style.css" rel="stylesheet"/>
+        <style>
+            /* Định nghĩa hiệu ứng nhấp nháy */
+            @keyframes blink-new {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            /* Áp dụng CSS cho class .blinking-new-text để hiển thị chữ NEW */
+            .blinking-new-text {
+                position: relative;
+            }
+
+            /* Chữ NEW nhấp nháy ở góc phải phía trên của chữ Events */
+            .blinking-new-text::before {
+                content: "NEW"; /* Nội dung chữ "NEW" */
+                color: white;
+                background-color: red; /* Nền màu đỏ */
+                font-size: 10px; /* Kích thước chữ nhỏ */
+                font-weight: bold; /* Chữ đậm */
+                padding: 2px 5px; /* Khoảng cách nội dung bên trong */
+                border-radius: 5px; /* Góc bo tròn */
+                position: absolute;
+                top: -10px; /* Định vị phía trên chữ "Events" */
+                right: -15px; /* Định vị phía phải của chữ "Events" */
+
+                /* Hiệu ứng nhấp nháy */
+                animation: blink-new 2s infinite; /* Chỉ chữ NEW nhấp nháy */
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <!-- Spinner Start -->
+        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+            <div class="spinner-grow text-primary" role="status"></div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar start -->
+        <div class="container-fluid fixed-top">
+            <div class="container topbar bg-primary d-none d-lg-block">
+                <div class="d-flex justify-content-between">
+                    <div class="top-info ps-2">
+                        <c:choose>
+                            <c:when test="#{session.getAttribute('username') == 'admin'}">
+                                <small class="text-white mx-2"><a href="../admin/main.xhtml" class="text-white">Admin</a></small>
+                            </c:when>
+                        </c:choose>
+                    </div>
+                    <div class="top-link pe-2">
+                        <h:form>
+                            <c:choose>
+                                <c:when test="#{(empty session.getAttribute('username'))}">
+                                    <small class="text-white mx-2"><i class="fas fa-user fa-2x"></i>&#160;<a href="login.xhtml" class="text-white">Login</a></small>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <small class="text-white mx-2"><i class="fas fa-user fa-2x"></i></small>
+                                    <h:commandLink class="btn btn-outline-dark border-0" action="${customersMB.showProfile(session.getAttribute('customerID'))}">#{session.getAttribute("username")}</h:commandLink>
+                                    <h:commandButton class="btn btn-outline-dark border-0" value="Logout" action="#{customersMB.logout}" />
+                                </c:otherwise>
+                            </c:choose>
+                        </h:form>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Feast Fiesta</h1></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="home.xhtml" class="nav-item nav-link active">Home</a>
+                            <a href="listproducts.xhtml" class="nav-item nav-link">Dishes</a>
+                            <a href="listmenu.xhtml" class="nav-item nav-link">Menu</a>
+                            <a href="feedback.xhtml" class="nav-item nav-link">Contact</a>
+                            <a href="viewvouchers.xhtml" class="nav-item nav-link blinking-new-text">Events</a>
+
+
+                            <c:choose>
+                                <c:when test="#{(empty  session.getAttribute('username'))}">
+
+                                </c:when>
+
+                                <c:otherwise>
+                                    <a href="listorders.xhtml" class="nav-item nav-link">My Orders</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div class="d-flex m-3 me-0">
+                            <c:choose>
+                                <c:when test="#{(empty  session.getAttribute('username'))}">
+                                    <a href="login.xhtml" class="position-relative me-4 my-auto">
+                                        <i class="fa fa-heart fa-2x"></i>
+                                    </a>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <a href="favoriteList.xhtml" class="position-relative me-4 my-auto">
+                                        <i class="fa fa-heart fa-2x"></i>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <a href="cart.xhtml" onclick="clearSessionAttribute('discount')" class="position-relative me-4 my-auto">
+                                <i class="fa fa-shopping-bag fa-2x"></i>
+                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">#{cartProcessSBMB.countUniqueProductsInCart()}</span>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+        <!-- JavaScript Libraries -->
+        <script>
+            function clearSessionAttribute(attributeName) {
+                fetch('clearSessionAttribute?attribute=' + attributeName, {
+                    method: 'POST'
+                })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log(`${attributeName} attribute cleared successfully.`);
+                                // You can redirect to another page or perform other actions here
+                            } else {
+                                console.error(`Failed to clear ${attributeName} attribute.`);
+                            }
+                        })
+                        .catch(error => console.error(`Error clearing ${attributeName} attribute:`, error));
+            }
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../resources/template/lib/easing/easing.min.js"></script>
+        <script src="../resources/template/lib/waypoints/waypoints.min.js"></script>
+        <script src="../resources/template/lib/lightbox/js/lightbox.min.js"></script>
+        <script src="../resources/template/lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="../resources/template/js/main.js"></script>
+    </body>
+</html>

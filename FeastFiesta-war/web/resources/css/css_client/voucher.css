@@ -1,0 +1,95 @@
+body {
+    background-color: #f4f4f4;
+    background-image: url('https://dominofilm.vn/uploads/albums/2019/01/photo_5c495cf04fcea.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+        .coupon-container {
+            width: 80%;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 15px;
+        }
+
+        .coupon-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .coupon-header img {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .coupon-details {
+            flex-grow: 1;
+        }
+
+        .discount {
+            color: #f60;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .coupon-progress {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .progress-bar {
+            height: 5px;
+            width: 100%;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            margin-top: 3px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #ff4500;
+            border-radius: 5px;
+        }
+
+        .coupon-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .copy-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .use-button {
+            background-color: #ff4500;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .details-link {
+            font-size: 12px;
+            color: #007bff;
+            text-decoration: none;
+            margin-top: 5px;
+            display: block;
+        }

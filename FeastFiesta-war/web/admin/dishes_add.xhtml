@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
+    <h:head>
+        <meta charset="utf-8" /> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> 
+        <title>Admin Management</title> 
+    </h:head> 
+    <h:body class="sb-nav-fixed"> 
+        <ui:include src="_adminheader.xhtml" />
+        <div id="layoutSidenav">
+            <ui:include src="_sidenav.xhtml" />
+            <div id="layoutSidenav_content">
+                <main> 
+                    <div class="container-fluid px-4"> 
+                        <h1 class="mt-4">Add Dish</h1>
+                        <div class="card mb-4"> 
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i> 
+                            </div> 
+                            <div class="card-body">
+                                <h:form id="formAddDish" class="needs-validation" enctype="multipart/form-data">
+                                    <h:inputHidden id="dishID" value="#{dishesMB.dish.dishID}"/>
+                                    <div>
+                                        <h:outputLabel for="itemName" value="Dish Name" />
+                                        <h:inputText id="itemName" styleClass="form-control" value="#{dishesMB.dish.itemName}" required="true" requiredMessage="Name is empty" />
+                                        <h:message for="itemName" class="invalid-mess" />
+                                    </div>
+                                    <div>
+                                        <h:outputLabel for="price" value="Price" />
+                                        <h:inputText id="price" styleClass="form-control" value="#{dishesMB.dish.price}" required="true" requiredMessage="Price is empty" />
+                                        <h:message for="price" class="invalid-mess" />
+                                    </div>
+                                    <h:outputText value="Category"/>
+                                    <h:selectOneMenu class="form-control" id="categoryID" value="${dishesMB.categoryID}">
+                                        <f:selectItems value="#{dishesMB.showAllCategories()}" var="itemPID"
+                                                       itemValue="#{itemPID.categoryID}" itemLabel="#{itemPID.categoryID} -#{itemPID.name}"/>
+                                    </h:selectOneMenu>
+                                    <h:message for="categoryID"/>
+                                    <div>
+                                        <h:outputLabel for="picture" value="Picture" />
+                                        <h:inputFile styleClass="form-control"  value="#{dishesMB.file}" ></h:inputFile>
+                                        <h:message for="picture" class="invalid-mess" />
+                                    </div>
+
+                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                        <h:commandButton action="#{dishesMB.addDish()}" value="Add Dish" styleClass="btn btn-primary" type="submit" />
+                                        <a href="dishes_view.xhtml" class="btn btn-secondary">Return</a>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="../resources/js/js_admin/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="../resources/js/js_admin/datatables-simple-demo.js"></script>
+    </h:body>
+</html>
