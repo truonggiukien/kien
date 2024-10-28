@@ -9,12 +9,12 @@
         <script>
             function copyToClipboard(eventName) {
                 var tempInput = document.createElement("input");
-                tempInput.value = eventName; 
+                tempInput.value = eventName;
                 document.body.appendChild(tempInput);
-                tempInput.select(); 
-                document.execCommand("copy"); 
-                document.body.removeChild(tempInput); 
-                alert("Copied: " + eventName); 
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+                alert("Copied: " + eventName);
             }
         </script>
     </h:head>
@@ -50,6 +50,8 @@
 
                                                 <!-- Display end date -->
                                                 <h:outputText id="endDate#{event.eventID}" value="#{eventsMB.formatDay(event.endDate)}" styleClass="event-date" />
+                                                <h:graphicImage value="#{event.imagePath}" alt="Event Image" />
+
                                             </div>
 
                                             <div class="event-details">
