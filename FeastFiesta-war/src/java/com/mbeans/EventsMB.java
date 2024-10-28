@@ -1,11 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package com.mbeans;
 
 import com.entitybeans.Events;
 import com.sessionbeans.EventsFacadeLocal;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.FileOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -14,11 +14,8 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 
-/**
- *
- * @author Huynh
- */
 @Named(value = "eventsMB")
 @RequestScoped
 public class EventsMB {
@@ -28,28 +25,43 @@ public class EventsMB {
 
     private Events event;
 
+    private Part eventImage;
+    private String imagePath;
+
     public EventsMB() {
         event = new Events();
     }
 
+    public Part getEventImage() {
+        return eventImage;
+    }
+
+    public void setEventImage(Part eventImage) {
+        this.eventImage = eventImage;
+    }
+
     public String addEvents() {
         if (event.getEventID() == null) {
+            saveImage();
             eventsFacade.create(event);
+            return "events_view";
         } else {
-            eventsFacade.edit(event);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Event already exists."));
+            return null;
         }
-        return "events_view";
     }
 
     public String editEvents() {
         if (eventsFacade.find(event.getEventID()) != null) {
+            saveImage();
             eventsFacade.edit(event);
+            return "events_view";
         } else {
-            FacesContext.getCurrentInstance().addMessage("formEditEvent:eventID", new FacesMessage("ID don't exist"));
-            return findEventforUpdate(event);
+            FacesContext.getCurrentInstance().addMessage("formEditEvent:eventID", new FacesMessage("ID doesn't exist"));
+            return "events_edit";
         }
-        return "events_view";
     }
+
     public String deleteEvents(Events cat) {
         eventsFacade.remove(cat);
         return "events_view";
@@ -68,18 +80,27 @@ public class EventsMB {
         event = new Events();
         return "events_view";
     }
-    
-    public String formatDay(Date date) {
-    // Định dạng đầu vào
-    SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-    // Định dạng đầu ra
-    SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-    
-    // Chuyển đổi ngày
-    return outputFormat.format(date);
-}
 
-    // Getters and Setters
+    public String formatDay(Date date) {
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return outputFormat.format(date);
+    }
+
+    private void saveImage() {
+        if (eventImage != null) {
+            try (InputStream input = eventImage.getInputStream()) {
+                String fileName = "uploads/" + eventImage.getSubmittedFileName();
+                File file = new File(fileName);
+                try (FileOutputStream output = new FileOutputStream(file)) {
+                    input.transferTo(output);
+                    event.setEventName(fileName); // Update event with the image path
+                }
+            } catch (IOException e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Image upload failed."));
+            }
+        }
+    }
+
     public Events getEvent() {
         return event;
     }
@@ -87,5 +108,4 @@ public class EventsMB {
     public void setEvent(Events event) {
         this.event = event;
     }
-    
 }
