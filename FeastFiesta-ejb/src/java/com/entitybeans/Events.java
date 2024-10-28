@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.entitybeans;
 
 import java.io.Serializable;
@@ -46,22 +42,34 @@ public class Events implements Serializable {
     @Basic(optional = false)
     @Column(name = "EventID")
     private Integer eventID;
+
     @Size(max = 2147483647)
     @Column(name = "EventName")
     private String eventName;
+
     @Column(name = "BeginDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date beginDate;
+
     @Column(name = "EndDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+
     @Column(name = "Quantity")
     private Integer quantity;
+
     @Size(max = 2147483647)
     @Column(name = "Discount")
     private String discount;
+
+    @Size(max = 2147483647)
+    @Column(name = "image_path")  // New column to store image path
+    private String imagePath;
+
     @OneToMany(mappedBy = "eventID")
     private Collection<Orders> ordersCollection;
+
+    // Constructors, getters, and setters
 
     public Events() {
     }
@@ -118,6 +126,14 @@ public class Events implements Serializable {
         this.discount = discount;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     @XmlTransient
     public Collection<Orders> getOrdersCollection() {
         return ordersCollection;
@@ -136,20 +152,15 @@ public class Events implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Events)) {
             return false;
         }
         Events other = (Events) object;
-        if ((this.eventID == null && other.eventID != null) || (this.eventID != null && !this.eventID.equals(other.eventID))) {
-            return false;
-        }
-        return true;
+        return !((this.eventID == null && other.eventID != null) || (this.eventID != null && !this.eventID.equals(other.eventID)));
     }
 
     @Override
     public String toString() {
         return "com.entitybeans.Events[ eventID=" + eventID + " ]";
     }
-    
 }
