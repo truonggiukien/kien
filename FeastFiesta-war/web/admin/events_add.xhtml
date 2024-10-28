@@ -56,6 +56,12 @@
                                         <h:message for="discount" class="invalid-mess" />
                                     </div>
 
+                                    <h:form enctype="multipart/form-data">
+                                        <h:inputFile value="#{eventMB.eventImage}" />
+                                        <h:commandButton value="Upload" action="#{eventMB.saveEvent}" />
+                                    </h:form>
+
+
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                         <h:commandButton action="#{eventsMB.addEvents()}" value="Add Event" styleClass="btn btn-primary" type="submit" />
                                         <a href="events_view.xhtml" class="btn btn-secondary">Return</a>
